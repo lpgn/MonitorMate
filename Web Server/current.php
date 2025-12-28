@@ -9,7 +9,7 @@
 	<link rel="apple-touch-icon" href="./images/iosicon120.png" type="image/png">
 	<link rel="mask-icon" href="./images/mask-icon.svg" color='#ff9c1a'>
 	<link rel="stylesheet" href="monitormate.css" type="text/css">
-<link rel="stylesheet" href="monitormate-modern.css?v=202512280343" type="text/css">
+<link rel="stylesheet" href="monitormate-modern.css?v=202512280348" type="text/css">
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="http://code.highcharts.com/5.0.14/highcharts.js"></script>
 	<script src="http://code.highcharts.com/5.0.14/highcharts-more.js"></script>

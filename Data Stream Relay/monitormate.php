@@ -60,7 +60,7 @@ if ($required_arguments != 0) {
 	print_help();
 	exit(1);
 } elseif (!isset($IP_address)) {
-	$IP_address = "0.0.0.0"; // this will make it listen on ALL interfaces
+	$IP_address = "0.0.0.0"; // 0.0.0.0 will make it listen on ALL interfaces
 }
 
 $socket_URL = "udp://".$IP_address.":".$port_number;
