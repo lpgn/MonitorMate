@@ -24,10 +24,14 @@
 			<li class="current"><a href="current.php">Current Status</a></li>
 			<li><a href="historical.html">Historical</a></li>
 			<li><a href="details.html">Details</a></li>
-			<?php
-				if (DEBUG) {
-					print("<li><a href='debug.html'>DEBUG</a></li>");
-				}
+<?php
+ob_start();
+require_once './config/config.php';
+ob_end_clean();
+if (defined('DEBUG') && DEBUG) {
+print("<li><a href='debug.html'>DEBUG</a></li>");
+}
+?>
 			?>
 		</ol>
 		<h1 id="navtitle"></h1>
@@ -36,8 +40,8 @@
 		</div>
 	</div>
 <?php
-	ob_start(); //Redirect output to internal buffer
-	require_once './config/config.php';
+	include_once('fix_mysql.inc.php');
+	ob_start(); //Redirect output to internal buffer			
 	require_once './database.php';
 	ob_end_clean();
 	
@@ -71,8 +75,8 @@
 				draw_chart('fndc_shunts', false);
 				draw_chart('inverter_power', false);
 				draw_chart('cc_charge_power', false);
-				// draw_chart('fndc_shuntA', false);
-				// draw_chart('fndc_shuntB', false);
+				draw_chart('fndc_shuntA', false);
+				draw_chart('fndc_shuntB', false);
 				draw_chart('fndc_shuntC', false);
 				
 				// Apply the common gauge theme
@@ -100,8 +104,8 @@
 			draw_chart("batt_volts_gauge", update);
 			draw_chart("cc_output_gauge", update);
 			draw_chart("inverter_power_gauge", update);
-			// draw_chart("fndc_shuntA_gauge", update);
-			// draw_chart("fndc_shuntB_gauge", update);
+			draw_chart("fndc_shuntA_gauge", update);
+			draw_chart("fndc_shuntB_gauge", update);
 			draw_chart("fndc_shuntC_gauge", update);
 			draw_chart("fndc_shuntNet_gauge", update);
 		}

@@ -1,4 +1,7 @@
 <?php
+//error_reporting(E_ALL);
+//ini_set('display_errors', 'On');
+include_once('fix_mysql.inc.php');
 /*
 Copyright (C) 2012-2017 Timothy Martin
 
@@ -259,8 +262,8 @@ if (DEBUG && !POST) {
 } else {
 	file_put_contents("./data/status.json", json_encode($parsed_array));
 	// copy-on-write, rename seems unncessary. PHP claims fwrite is atomic.
-	// file_put_contents("./data/status.json.tmp", json_encode($parsed_array));
-	// rename("./data/status.json.tmp", "./data/status.json");
+	//file_put_contents("./data/status.json.tmp", json_encode($parsed_array));
+	//rename("./data/status.json.tmp", "./data/status.json");
 }
 
 exit(0);

@@ -4,11 +4,11 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/monitormate/monitormate.php -p 57027 -u http://yourwebsite.com/monitormate/ -t y0urT0k3nG03sH3r3!
+ExecStart=/usr/local/bin/monitormate/monitormate.php -p 57027 -u http://monitormate.fabfarm.org:8080/post_datastream.php -t monitormate
+StandardOutput=journal
+StandardError=journal
 Restart=on-abort
-
-[Socket]
-ListenDatagram=57027
+User=root
 
 [Install]
 WantedBy=multi-user.target

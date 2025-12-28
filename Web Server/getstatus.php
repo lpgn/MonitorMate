@@ -1,4 +1,5 @@
 <?php
+include_once('fix_mysql.inc.php');
 /*
 Copyright (C) 2012-2014 Jesus Perez, Timothy Martin
 This program is free software: you can redistribute it and/or modify

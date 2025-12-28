@@ -1,4 +1,5 @@
 <?php
+include_once('fix_mysql.inc.php');
 
 class Prefs {
 	public $dashboard_rows = array();
