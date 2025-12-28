@@ -1,55 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<!-- Modern Favicon/Theme Colors -->
 	<link rel="icon" href="./images/favicon16.png" type="image/png">
-	<link rel="stylesheet" href="monitormate.css" type="text/css">
-<link rel="stylesheet" href="monitormate-modern.css?v=202512280348" type="text/css">
-	<link rel="stylesheet" href="monitormate-modern.css?v=202512280348" type="text/css">
+	<meta name="theme-color" content="#0a0b10">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="monitormate-modern.css?v=2" type="text/css">
+
+	<!-- Scripts -->
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="./config/config.php"></script>
 	<script src="./js/monitormate.js"></script>
-	<title>MonitorMate: Debug</title>
+	<script src="./js/monitormate-theme.js"></script>
+
+	<title>MonitorMate // DEBUG</title>
 </head>
+
 <body>
 	<div id="navbar">
+		<div style="display:flex; flex-direction:column;">
+			<h1>MonitorMate <span style="font-size:0.6em; color:var(--text-muted); vertical-align:middle;">// DEBUG
+					<span style="font-size:0.5em; opacity: 0.7;">// RAW DATA</span></span>
+			</h1>
+			<div id="button-cluster">
+				LAST UPDATE: <span id="update_time" style="font-family: var(--font-mono);">SYNCING...</span>
+			</div>
+		</div>
+
 		<ol id="toc">
-			<li><a href="current.php">Current Status</a></li>
-			<li><a href="historical.html">Historical</a></li>
-			<li><a href="details.html">Details</a></li>
+			<li><a href="current_v2.php">SYSTEM STATUS</a></li>
+			<li><a href="historical.html">LOGS</a></li>
+			<li><a href="details.html">METRICS</a></li>
 			<li class="current"><a href="debug.html">DEBUG</a></li>
 		</ol>
-		<h1 id="navtitle"></h1>
-		<div id="button-cluster">
-			Updated: <span id="update_time">?</span>
-		</div>
 	</div>
-	<h1>Timestamps</h1>
-	<table>
-		<tr><td>Server Local Time:</td><td id="server_local_time"></td></tr>
-		<tr><td>Host Local Time:</td><td id="relay_local_time"></td></tr>
-		<tr><td>MATE Local Time:</td><td id="mate_local_time"></td></tr>
-	</table>
-	<p>
-	<h1>status.json <a href="data/status.json">(link)</a> <a href="data/datastream.json">(raw datastream JSON)</a></h1>
-	<textarea id="status_json" class="file" spellcheck="false">
-		Loading…
-	</textarea>
+	<main class="dashboard-grid" style="display:block;">
 
-	<!--<h1>Last Query Executed <a href="data/query.log">(link)</a></h1>
-	<textarea id="query_log" class="file" spellcheck="false">
-		Loading…
-	</textarea>-->
-	
-	<h1>Error Log <a href="data/error.log">(link)</a> <a href="debug.php">(clear)</a></h1>
-	<textarea id="error_log" class="file" spellcheck="false">
-		Loading…
-	</textarea>
-	
+		<section class="monitor-card" style="height:auto; margin-bottom: 2rem; padding: 1rem;">
+			<h2>Timestamps</h2>
+			<table>
+				<tr>
+					<td>Server Local Time:</td>
+					<td id="server_local_time"></td>
+				</tr>
+				<tr>
+					<td>Host Local Time:</td>
+					<td id="relay_local_time"></td>
+				</tr>
+				<tr>
+					<td>MATE Local Time:</td>
+					<td id="mate_local_time"></td>
+				</tr>
+			</table>
+		</section>
+
+		<section class="monitor-card" style="height:auto; margin-bottom: 2rem; padding: 1rem;">
+			<h2 style="display:inline-block; margin-right: 1rem;">status.json</h2>
+			<div style="float:right; font-size: 0.8em; margin-top: 1.5rem;">
+				<a href="data/status.json">[LINK]</a> <a href="data/datastream.json">[RAW]</a>
+			</div>
+			<textarea id="status_json" class="file" spellcheck="false"
+				style="width:100%; box-sizing:border-box; margin-top:0.5rem;">
+    		    Loading…
+    	    </textarea>
+		</section>
+
+		<!--<h1>Last Query Executed <a href="data/query.log">(link)</a></h1>
+    	<textarea id="query_log" class="file" spellcheck="false">
+    		Loading…
+    	</textarea>-->
+
+		<section class="monitor-card" style="height:auto; margin-bottom: 2rem; padding: 1rem;">
+			<h2 style="display:inline-block; margin-right: 1rem;">Error Log</h2>
+			<div style="float:right; font-size: 0.8em; margin-top: 1.5rem;">
+				<a href="data/error.log">[LINK]</a> <a href="debug.php">[CLEAR]</a>
+			</div>
+			<textarea id="error_log" class="file" spellcheck="false"
+				style="width:100%; box-sizing:border-box; margin-top:0.5rem;">
+        		Loading…
+        	</textarea>
+		</section>
+
+	</main>
+
 	<script>
 
-		$(document).ready(function() {
-if (typeof CONFIG !== "undefined" && CONFIG.sysName) { $("#navtitle").text(CONFIG.sysName); }
+		$(document).ready(function () {
+			if (typeof CONFIG !== "undefined" && CONFIG.sysName) { $("#navtitle").text(CONFIG.sysName); }
 			$("#status_json").load("data/status.json");
 			// $("#query_log").load("data/query.log");
 			$("#error_log").load("data/error.log");
@@ -57,10 +100,13 @@ if (typeof CONFIG !== "undefined" && CONFIG.sysName) { $("#navtitle").text(CONFI
 			$('#server_local_time').text(json_status['time'].server_local_time);
 			$('#relay_local_time').text(json_status['time'].relay_local_time);
 			$('#mate_local_time').text(json_status['time'].mate_local_time);
+
+			finalize_CSS();
 		});
 
 	</script>
-	
-<script src="./js/theme-toggle.js"></script>
+
+
 </body>
+
 </html>

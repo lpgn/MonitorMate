@@ -12,3 +12,5 @@ Web Server/config/config.local.php
 Web Server/config/debug.on
 Web Server/data/*.json
 Web Server/data/error.log
+.agent/workflows/frontend-design.md
+Web Server/data/status.json

@@ -124,6 +124,7 @@ if (isset($datastream_array['devices'])) {
 }
 
 // are we at the configured registration interval?
+$reg = false; // Initialize $reg to false to avoid undefined variable warnings
 if (!(date('i', $timestamp) % $reg_interval)) {
 	// current time matches the reg_interval so we should register data in the database
 	if (date('i', $timestamp) != date('i', $prevTimestamp)) {

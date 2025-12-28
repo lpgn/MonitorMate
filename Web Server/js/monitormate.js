@@ -21,15 +21,15 @@ for more details.
 // some arrays for the labels for the devices and shunts.
 // these will get set up in set_labels() after get_datastream().
 var deviceLabels = [];
-var shuntLabels  = [];
+var shuntLabels = [];
 
 // the date, status, and arrays with all the data.
-var display_date  = null;
-var json_status   = null;
+var display_date = null;
+var json_status = null;
 var full_day_data = {};
-var years_data    = [];
-var months_data   = [];
-var days_data     = [];
+var years_data = [];
+var months_data = [];
+var days_data = [];
 
 // currenty used by details.html for reasons I can't figure out at 2:23am.
 var status_content = {
@@ -40,13 +40,13 @@ var status_content = {
 // Platform detection, looks for Apple platforms both OS X and iOS.
 // FIXME: should also detect specifically "touch" devices
 function isApple() {
-	return navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i)?true:false;
+	return navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i) ? true : false;
 }
 
 if (typeof Highcharts !== 'undefined') {
 	// Make a copy of the defaults, call this line before any other setOptions call
 	var HCDefaults = $.extend(true, {}, Highcharts.getOptions(), {});
-	
+
 	function apply_highchart_theme(theme) {
 		// Fortunately, Highcharts returns the reference to defaultOptions itself
 		// We can manipulate this and delete all the properties
@@ -61,30 +61,30 @@ if (typeof Highcharts !== 'undefined') {
 }
 
 function finalize_CSS() {
+	// LEGACY: Disabled for v2 Modern Theme
 	// try to blur the navbar, and if that works then change the color.
-	var cssBlurSupport = $('#navbar').css("-webkit-backdrop-filter", "blur(30px)");
-	
-	if (cssBlurSupport) {    
-	    $('#navbar').css("background-color", "rgba(238, 239, 249, 0.2)");
-	}
+	// var cssBlurSupport = $('#navbar').css("-webkit-backdrop-filter", "blur(30px)");
+
+	// if (cssBlurSupport) {    
+	//    $('#navbar').css("background-color", "rgba(238, 239, 249, 0.2)");
+	// }
 }
 
 function get_URLvars() {
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-    return vars;
+	var vars = [], hash;
+	var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	for (var i = 0; i < hashes.length; i++) {
+		hash = hashes[i].split('=');
+		vars.push(hash[0]);
+		vars[hash[0]] = hash[1];
+	}
+	return vars;
 }
 
 
 function update_URL(page, dateString) {
 	var queryString = null;
-	
+
 	if (!dateString) {
 		queryString = page;
 	} else {
@@ -95,18 +95,18 @@ function update_URL(page, dateString) {
 
 
 function set_cookies(name, value) {
-//	$.cookie(name, value);
+	//	$.cookie(name, value);
 }
 
 
 function get_cookies() {
 	/*global chart_content, status_content */
 
-//	chart_content["multichart1"] = $.cookie("multichart1");
-//	chart_content["multichart2"] = $.cookie("multichart2");
-//	chart_content["multichart3"] = $.cookie("multichart3");
-//	status_content["status_top"] = $.cookie("status_top");
-//	status_content["status_bottom"] = $.cookie("status_bottom");
+	//	chart_content["multichart1"] = $.cookie("multichart1");
+	//	chart_content["multichart2"] = $.cookie("multichart2");
+	//	chart_content["multichart3"] = $.cookie("multichart3");
+	//	status_content["status_top"] = $.cookie("status_top");
+	//	status_content["status_bottom"] = $.cookie("status_bottom");
 }
 
 
@@ -141,7 +141,7 @@ function set_labels() {
 							break;
 						default:
 							deviceLabels[port] = "Unknown Device";
-						break;
+							break;
 					}
 				} else {
 					deviceLabels[port] = CONFIG.deviceLabels[port - 1];
@@ -149,7 +149,7 @@ function set_labels() {
 			}
 		}
 	}
-	
+
 	// the shunts are a bit more straight forward...
 	for (var channel in CONFIG.shuntLabels) {
 		if (CONFIG.shuntLabels[channel] === "") {
@@ -187,13 +187,13 @@ function get_dataStream(date, scope) {
 
 	/* global full_day_data */
 	var urlArguments;
-	
+
 	// FIXME: this otherwise assumes date is well formatted. Which is not necessarily true.
 	if (!date || date == "today") {
 		// if there's no date, set it to today
 		date = get_formatted_date();
 	}
-	
+
 	if (scope) {
 		// if scope is jibberish, it'll parse to NaN and be falsy (below).
 		scope = parseInt(scope);
@@ -234,7 +234,7 @@ function get_days_in_month(year, month) {
 
 function get_formatted_date(date) {
 	var d;
-	
+
 	if (!date) {
 		d = new Date();
 	} else {
@@ -266,7 +266,7 @@ function date_from_ISO8601(isostr) {
 	Put the items in the pop-up selection menu for the charts
 */
 function populate_chart_select(pselect) {
-	
+
 	/*global full_day_data */
 	var select_items = [];
 
@@ -312,7 +312,7 @@ function populate_status_select() {
 				if (port != "totals") {
 					var name = '';
 					var val = '';
-	
+
 					val = i + ":" + port;
 					tabs.push("<option value=" + val + ">" + deviceLabels[port] + " (" + port + ")</option>");
 				}
@@ -320,7 +320,7 @@ function populate_status_select() {
 		}
 	}
 	tabs.push("</optgroup>");
-	
+
 	$("#status_top_select").html(tabs.join(''));
 	$("#status_bottom_select").html(tabs.join(''));
 }
@@ -391,7 +391,7 @@ function set_status(HTML_id, value) {
 	switch (device_id) {
 
 		case "summary":
-			content =	'<table><caption>Summary<div>' + device.date + '</div></caption>\
+			content = '<table><caption>Summary<div>' + device.date + '</div></caption>\
 						<tr><td class="label">Production:</td><td>' + device.ah_in + ' Ah, ' + device.kwh_in + ' kWh</td></tr>\
 						<tr><td class="label">Usage:</td><td>' + device.ah_out + ' Ah, ' + device.kwh_out + ' kWh</td></tr>\
 						<tr><td class="label">Net:</td><td>' + device.ah_net + ' Ah, ' + device.kwh_net + ' kWh</td></tr>\
@@ -404,7 +404,7 @@ function set_status(HTML_id, value) {
 
 		case ID.fx:
 		case ID.fxr:
-			content =	'<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
+			content = '<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
 						<tr><td class="label">Operational Mode:</td><td>' + device.operational_mode + '</td></tr>\
 						<tr><td class="label">Battery Voltage:</td><td>' + device.battery_voltage + ' V</td></tr>\
 						<tr><td class="label">AC Output Voltage:</td><td>' + device.ac_output_voltage + ' V</td></tr>\
@@ -421,7 +421,7 @@ function set_status(HTML_id, value) {
 			break;
 
 		case ID.rad:
-			content =	'<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
+			content = '<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
 						<tr><td class="label">Operational Mode:</td><td>' + device.operational_mode + '</td></tr>\
 						<tr><td class="label">AC Input Mode:</td><td>' + device.ac_mode + '</td></tr>\
 						<tr><td class="label">AC Output Voltage L1:</td><td>' + device.ac_output_voltage_l1 + ' V</td></tr>\
@@ -446,7 +446,7 @@ function set_status(HTML_id, value) {
 
 		case ID.cc:
 			var charge_watts = parseFloat(device.battery_voltage) * parseFloat(device.charge_current);
-			content =	'<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
+			content = '<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
 						<tr><td class="label">Charge Mode:</td><td>' + device.charge_mode + '</td></tr>\
 						<tr><td class="label">Battery Voltage:</td><td>' + device.battery_voltage + ' V</td></tr>\
 						<tr><td class="label">Charge Current:</td><td>' + device.charge_current + ' A</td></tr>\
@@ -462,11 +462,11 @@ function set_status(HTML_id, value) {
 
 		case ID.fndc:
 			var total_shunt_amps = parseFloat(device.shunt_a_current) + parseFloat(device.shunt_b_current) + parseFloat(device.shunt_c_current);
-			var net_accumulated_ah  = parseFloat(device.accumulated_ah_shunt_a) + parseFloat(device.accumulated_ah_shunt_b) + parseFloat(device.accumulated_ah_shunt_c);
+			var net_accumulated_ah = parseFloat(device.accumulated_ah_shunt_a) + parseFloat(device.accumulated_ah_shunt_b) + parseFloat(device.accumulated_ah_shunt_c);
 			var net_accumulated_kwh = parseFloat(device.accumulated_kwh_shunt_a) + parseFloat(device.accumulated_kwh_shunt_b) + parseFloat(device.accumulated_kwh_shunt_c);
-			var today_net_ah  = parseInt(device.today_net_input_ah) - parseInt(device.today_net_output_ah);
+			var today_net_ah = parseInt(device.today_net_input_ah) - parseInt(device.today_net_output_ah);
 			var today_net_kwh = parseFloat(device.today_net_input_kwh) - parseFloat(device.today_net_output_kwh);
-			content =	'<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
+			content = '<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
 						<tr><td class="label">State of Charge:</td><td>' + device.soc + '%</td></tr>\
 						<tr><td class="label">Days Since Charged:</td><td>' + device.days_since_full + ' Days</td></tr>\
 						<tr><td class="label">Charge Required:</td><td>' + (device.charge_factor_corrected_net_batt_ah * -1) + ' Ah, ' + (device.charge_factor_corrected_net_batt_kwh * -1) + ' kWh</td></tr>\
@@ -513,7 +513,7 @@ function draw_chart(chart_id, update, content) {
 	var func_call;
 
 	update = update || false;
-	
+
 	// if only one thing was passed in, assume the ID and the chart are the same name
 	if (content == null) {
 		content = chart_id;
