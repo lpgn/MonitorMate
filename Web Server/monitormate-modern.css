@@ -360,3 +360,40 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+/* Cache bust 1766893355 */
+
+/* Title always visible - above navbar */
+body::before {
+    content: 'FabFarm Energy Monitor';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: var(--color-charcoal);
+    background: var(--color-cream);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 1000;
+}
+
+body.dark-mode::before {
+    color: #e8e6e3;
+    background: #1a1a1a;
+    border-bottom-color: rgba(232, 230, 227, 0.08);
+}
+
+/* Push navbar down */
+body {
+    padding-top: 80px !important; /* 32px title + 48px navbar */
+}
+
+#navbar {
+    top: 32px !important;
+}

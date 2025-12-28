@@ -9,7 +9,7 @@
 	<link rel="apple-touch-icon" href="./images/iosicon120.png" type="image/png">
 	<link rel="mask-icon" href="./images/mask-icon.svg" color='#ff9c1a'>
 	<link rel="stylesheet" href="monitormate.css" type="text/css">
-	<link rel="stylesheet" href="monitormate-modern.css?v=202512280328" type="text/css">
+	<link rel="stylesheet" href="monitormate-modern.css?v=202512280343" type="text/css">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://code.highcharts.com/5.0.14/highcharts.js"></script>
 	<script src="https://code.highcharts.com/5.0.14/highcharts-more.js"></script>
@@ -32,7 +32,6 @@ ob_end_clean();
 if (defined('DEBUG') && DEBUG) {
 print("<li><a href='debug.html'>DEBUG</a></li>");
 }
-?>
 		</ol>
 		<h1 id="navtitle"></h1>
 		<div id="button-cluster">
@@ -60,7 +59,6 @@ print("<li><a href='debug.html'>DEBUG</a></li>");
 		");
 	}
 	print("</table>");
-?>
 
 	<script>
 		// Dark mode Highcharts theme
@@ -80,6 +78,7 @@ print("<li><a href='debug.html'>DEBUG</a></li>");
 		};
 
 		$(document).ready(function() {
+if (typeof CONFIG !== "undefined" && CONFIG.sysName) { $("#navtitle").text(CONFIG.sysName); }
 			get_dataStream(false, 4);
 
 			if (full_day_data !== null) {
