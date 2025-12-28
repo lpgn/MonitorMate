@@ -4,12 +4,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	
+    <!-- Modern Favicon/Theme Colors -->
 	<link rel="icon" href="./images/favicon16.png" type="image/png">
-	<link rel="apple-touch-icon" href="./images/iosicon120.png" type="image/png">
-	<link rel="mask-icon" href="./images/mask-icon.svg" color='#ff9c1a'>
-	<link rel="stylesheet" href="monitormate.css" type="text/css">
-<link rel="stylesheet" href="monitormate-modern.css?v=202512280348" type="text/css">
+    <meta name="theme-color" content="#0a0b10">
+	
+    <!-- CSS -->
+    <link rel="stylesheet" href="monitormate-modern.css?v=<?php echo time(); ?>" type="text/css">
+	
+    <!-- Scripts -->
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="http://code.highcharts.com/5.0.14/highcharts.js"></script>
 	<script src="http://code.highcharts.com/5.0.14/highcharts-more.js"></script>
@@ -17,60 +20,84 @@
 	<script src="./js/monitormate.js"></script>
 	<script src="./js/charts.js"></script>
 	<script src="./js/gauges.js"></script>
-	<title>MonitorMate: Current Status</title>
+    <script src="./js/monitormate-theme.js?v=<?php echo time(); ?>"></script>
+    
+	<title>MonitorMate // SYSTEM STATUS</title>
 </head>
 <body>
-	<div id="navbar">
-		<ol id="toc">
-			<li class="current"><a href="current.php">Current Status</a></li>
-			<li><a href="historical.html">Historical</a></li>
-			<li><a href="details.html">Details</a></li>
-<?php
-ob_start();
-require_once './config/config.php';
-ob_end_clean();
-if (defined('DEBUG') && DEBUG) {
-print("<li><a href='debug.html'>DEBUG</a></li>");
-}
-?>
-			?>
-		</ol>
-		<h1 id="navtitle"></h1>
-		<div id="button-cluster">
-			Updated: <span id="update_time">?</span>
-		</div>
-	</div>
-<?php
-	include_once('fix_mysql.inc.php');
-	ob_start(); //Redirect output to internal buffer			
-	require_once './database.php';
-	ob_end_clean();
-	
-	$prefs = new Prefs;
-	$prefs->load();
-	
-	print("<table class='dashboard'>");
-	foreach ($prefs->dashboard_rows as $row) {
-		$item = explode(";", $row);
-		print("
-			<tr class='dashboard_row'>
-				<td class='table-gauge'><div class='table-gauge' id='{$item[0]}'></div></td>
-				<td class='table-chart'><div class='table-chart' id='{$item[1]}'></div></td>
-			</tr>\n
-		");
-	}
-	print("</table>");
 
-?>
+	<div id="navbar">
+        <div style="display:flex; flex-direction:column;">
+    		<h1>MonitorMate <span style="font-size:0.6em; color:var(--text-muted); vertical-align:middle;">// v2.0</span></h1>
+            <div id="button-cluster">
+    			LAST UPDATE: <span id="update_time" style="font-family: var(--font-mono);">SYNCING...</span>
+    		</div>
+        </div>
+        
+		<ol id="toc">
+			<li class="current"><a href="current.php">SYSTEM STATUS</a></li>
+			<li><a href="historical.html">LOGS</a></li>
+			<li><a href="details.html">METRICS</a></li>
+            <?php
+            ob_start();
+            require_once './config/config.php';
+            ob_end_clean();
+            if (defined('DEBUG') && DEBUG) {
+                print("<li><a href='debug.html'>DEBUG</a></li>");
+            }
+            ?>
+		</ol>
+	</div>
+
+    <main class="dashboard-grid">
+    <?php
+        include_once('fix_mysql.inc.php');
+        ob_start(); 		
+        require_once './database.php';
+        ob_end_clean();
+        
+        $prefs = new Prefs;
+        $prefs->load();
+        
+        foreach ($prefs->dashboard_rows as $row) {
+            $item = explode(";", $row);
+            // $item[0] is gauge ID, $item[1] is chart ID
+            print("
+                <article class='monitor-card'>
+                    <div class='card-content'>
+                        <div class='card-gauge' id='{$item[0]}'></div>
+                        <div class='card-chart' id='{$item[1]}'></div>
+                    </div>
+                </article>\n
+            ");
+        }
+    ?>
+    </main>
 
 	<script>
 
+
 		$(document).ready(function() {
+            
+
+
+            // Force reflow on resize
+            $(window).resize(function() {
+                $('.monitor-card .card-chart, .monitor-card .card-gauge').each(function() {
+                     var chart = $(this).highcharts();
+                     if (chart) chart.reflow();
+                });
+            });
+
 			get_dataStream(false, 4);
 
 			if (full_day_data !== null) {
-				// Apply the common chart theme
-				apply_highchart_theme(Highcharts.chartTheme);
+				
+                // DRAW CHARTS
+                if (typeof apply_highchart_theme === 'function') {
+				    apply_highchart_theme(Highcharts.chartTheme);
+                }
+				
 				draw_chart('fndc_soc', false);
 				draw_chart('battery_voltage', false);
 				draw_chart('fndc_shunts', false);
@@ -80,27 +107,22 @@ print("<li><a href='debug.html'>DEBUG</a></li>");
 				draw_chart('fndc_shuntB', false);
 				draw_chart('fndc_shuntC', false);
 				
-				// Apply the common gauge theme
-				apply_highchart_theme(Highcharts.gaugeTheme);
+                // DRAW GAUGES
+                if (typeof apply_highchart_theme === 'function') {
+				    apply_highchart_theme(Highcharts.gaugeTheme);
+                }
 	
 				refresh_data(false);
 				setInterval("refresh_data()", 2*1000);
 			} else {
-				// must not be anything in full_day_data
-				$("#navbar").after("<p>No data exists for this day.</p>");
-				$("#update_time").text('N/A');
+				$("#navbar").after("<p style='text-align:center; padding:2rem; color:var(--text-muted);'>SYSTEM OFFLINE: No data received for today.</p>");
+				$("#update_time").text('OFFLINE');
 			}
-
-			finalize_CSS();
-			
 		});
 
 		function refresh_data(update) {
-
 			var update = (update != false)? true : false;
-
 			get_current_status();
-
 			draw_chart("fndc_soc_gauge", update);
 			draw_chart("batt_volts_gauge", update);
 			draw_chart("cc_output_gauge", update);
@@ -110,7 +132,6 @@ print("<li><a href='debug.html'>DEBUG</a></li>");
 			draw_chart("fndc_shuntC_gauge", update);
 			draw_chart("fndc_shuntNet_gauge", update);
 		}
-
 	</script>
 	
 </body>
