@@ -1,0 +1,362 @@
+/*
+  MonitorMate: Luxury Refined Edition
+  
+  Design Philosophy: 
+  Precision instrumentation meets Swiss watch aesthetics.
+  Restraint, elegance, and meticulous attention to detail.
+*/
+
+/* Typography: Distinctive serif paired with refined sans */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+    --color-cream: #faf8f5;
+    --color-charcoal: #2b2b2b;
+    --color-gold: #c9a961;
+    --color-gold-light: #e4d4b4;
+    --color-shadow: rgba(43, 43, 43, 0.06);
+    --color-border: rgba(43, 43, 43, 0.08);
+}
+
+body {
+    font-family: 'Work Sans', -apple-system, sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 300 !important;
+    background: var(--color-cream) !important;
+    color: var(--color-charcoal) !important;
+    letter-spacing: 0.3px;
+}
+
+/* Navbar: Elevated with subtle luxury */
+#navbar {
+    background: rgba(250, 248, 245, 0.98) !important;
+    backdrop-filter: blur(30px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    box-shadow: 0 1px 0 rgba(201, 169, 97, 0.1), 0 8px 32px rgba(43, 43, 43, 0.03) !important;
+    height: 48px !important;
+    padding: 0 24px !important;
+}
+
+#navbar h1 {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-weight: 400 !important;
+    font-size: 22px !important;
+    letter-spacing: 1px !important;
+    color: var(--color-charcoal) !important;
+}
+
+ol#toc {
+    margin: 13px 0 0 0 !important;
+}
+
+ol#toc a {
+    font-family: 'Work Sans', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 11px !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--color-charcoal) !important;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+ol#toc li {
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 24px 0 0 !important;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+ol#toc li:hover a {
+    opacity: 1;
+}
+
+ol#toc li.current {
+    background: transparent !important;
+    border-bottom: 2px solid var(--color-gold) !important;
+}
+
+ol#toc li.current a {
+    color: var(--color-charcoal) !important;
+    opacity: 1;
+}
+
+/* Cards: Refined elevation with subtle details */
+div.table-gauge,
+div.table-chart {
+    background: #ffffff !important;
+    border-radius: 2px !important;
+    box-shadow: 
+        0 0 0 1px var(--color-border),
+        0 2px 4px var(--color-shadow),
+        0 12px 48px rgba(43, 43, 43, 0.04) !important;
+    border: none !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+div.table-gauge::before,
+div.table-chart::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--color-gold-light) 50%, 
+        transparent 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+div.table-gauge:hover,
+div.table-chart:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 0 0 1px var(--color-gold-light),
+        0 4px 8px rgba(201, 169, 97, 0.08),
+        0 16px 64px rgba(43, 43, 43, 0.08) !important;
+}
+
+div.table-gauge:hover::before,
+div.table-chart:hover::before {
+    opacity: 1;
+}
+
+/* Typography refinement */
+caption {
+    font-family: 'Work Sans', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 11px !important;
+    letter-spacing: 1.2px !important;
+    text-transform: uppercase;
+    color: var(--color-charcoal) !important;
+    border-bottom: 1px solid var(--color-border) !important;
+}
+
+td {
+    font-family: 'Work Sans', sans-serif !important;
+    font-weight: 300 !important;
+    font-size: 13px;
+}
+
+td.figure {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+}
+
+/* Update time: Understated elegance */
+#update_time {
+    font-family: 'Work Sans', sans-serif !important;
+    font-weight: 400 !important;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+    background: transparent;
+    color: var(--color-charcoal);
+    padding: 0;
+    border: none;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+#button-cluster {
+    margin: 13px 4px !important;
+    font-size: 11px;
+    color: var(--color-charcoal);
+    opacity: 0.6;
+}
+
+/* Theme toggle: Refined interaction */
+#theme-toggle {
+    font-family: 'Work Sans', sans-serif !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    padding: 6px 16px !important;
+    margin-left: 20px !important;
+    border-radius: 2px !important;
+    border: 1px solid var(--color-border) !important;
+    background: transparent !important;
+    color: var(--color-charcoal) !important;
+    font-size: 11px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease !important;
+}
+
+#theme-toggle:hover {
+    background: var(--color-charcoal) !important;
+    color: var(--color-cream) !important;
+    border-color: var(--color-charcoal) !important;
+}
+
+#theme-toggle:active {
+    background: var(--color-gold) !important;
+    border-color: var(--color-gold) !important;
+    color: var(--color-charcoal) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        margin: 56px 12px 12px 12px !important;
+    }
+    
+    #navbar {
+        height: auto !important;
+        padding: 12px 16px !important;
+    }
+    
+    table.dashboard {
+        display: block;
+    }
+    
+    tr.dashboard_row {
+        display: flex;
+        flex-direction: column;
+        height: auto !important;
+        margin-bottom: 24px;
+    }
+    
+    tr.dashboard_row > td {
+        display: block;
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    .dashboard td.table-gauge {
+        width: 100% !important;
+    }
+    
+    div.table-gauge,
+    div.table-chart {
+        width: auto !important;
+        margin: 8px 0 !important;
+    }
+    
+    ol#toc {
+        position: relative;
+        left: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px !important;
+    }
+    
+    #navbar #button-cluster {
+        position: relative;
+        right: 0;
+        display: block;
+        margin-top: 12px !important;
+    }
+}
+
+/* Dark mode: Inverted luxury */
+body.dark-mode {
+    background: #1a1a1a !important;
+    color: #e8e6e3 !important;
+}
+
+body.dark-mode #navbar {
+    background: rgba(26, 26, 26, 0.98) !important;
+    border-bottom-color: rgba(232, 230, 227, 0.08) !important;
+    box-shadow: 0 1px 0 rgba(201, 169, 97, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.dark-mode #navbar h1,
+body.dark-mode ol#toc a {
+    color: #e8e6e3 !important;
+}
+
+body.dark-mode ol#toc li.current {
+    border-bottom-color: var(--color-gold) !important;
+}
+
+body.dark-mode div.table-gauge,
+body.dark-mode div.table-chart {
+    background: #242424 !important;
+    box-shadow: 
+        0 0 0 1px rgba(232, 230, 227, 0.08),
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        0 12px 48px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-mode div.table-gauge:hover,
+body.dark-mode div.table-chart:hover {
+    box-shadow: 
+        0 0 0 1px rgba(201, 169, 97, 0.3),
+        0 4px 8px rgba(201, 169, 97, 0.1),
+        0 16px 64px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.dark-mode caption {
+    color: #e8e6e3 !important;
+    border-bottom-color: rgba(232, 230, 227, 0.08) !important;
+}
+
+body.dark-mode td {
+    color: #c8c6c3;
+}
+
+body.dark-mode td.label,
+body.dark-mode th.subhead {
+    color: #888 !important;
+}
+
+body.dark-mode #theme-toggle {
+    border-color: rgba(232, 230, 227, 0.15) !important;
+    color: #e8e6e3 !important;
+}
+
+body.dark-mode #theme-toggle:hover {
+    background: #e8e6e3 !important;
+    color: #1a1a1a !important;
+    border-color: #e8e6e3 !important;
+}
+
+body.dark-mode #update_time {
+    color: #e8e6e3;
+}
+
+body.dark-mode #button-cluster {
+    color: #e8e6e3;
+}
+
+/* Refined animations: Subtle entrance */
+@keyframes fadeInSoft {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+tr.dashboard_row {
+    animation: fadeInSoft 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    animation-fill-mode: both;
+}
+
+tr.dashboard_row:nth-child(1) { animation-delay: 0.05s; }
+tr.dashboard_row:nth-child(2) { animation-delay: 0.10s; }
+tr.dashboard_row:nth-child(3) { animation-delay: 0.15s; }
+tr.dashboard_row:nth-child(4) { animation-delay: 0.20s; }
+tr.dashboard_row:nth-child(5) { animation-delay: 0.25s; }
+tr.dashboard_row:nth-child(6) { animation-delay: 0.30s; }
+
+/* Polish: Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

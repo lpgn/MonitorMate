@@ -235,7 +235,7 @@ function query_full_day($date, $scope){
 	// should always a date, and should always be formatted YYYY-MM-DD
 	// not always a scope, but always an int if there is one.
 
-	if ($date == date("Y-m-d")) {
+	if ($date == date("Y-m-d") || $date === NULL) {
 		// if the date is today...
 		if (isset($scope)) {
 			// ...and it's scoped.
@@ -298,6 +298,7 @@ function query_full_day($date, $scope){
 	
 	$full_day_querys = array("cc"=>$result_cc,"fndc"=>$result_fndc,"fx"=>$result_fx,"radian"=>$result_radian);
 
+$full_day_data = array();
 	// Summary only needs to net values to be computed, then add to full_day_data
 	while ($row = mysqli_fetch_assoc($result_summary)) {
 		// set_elementTypes($row); // row passed as a reference.
@@ -317,7 +318,7 @@ function query_full_day($date, $scope){
 	}
 
 	// there's more than one charge controller, query the totals, timestamp them and add them.
-	if (count($full_day_data[3]) > 1) {
+	if (isset($full_day_data[3]) && is_array($full_day_data[3]) && count($full_day_data[3]) > 1) {
 		$result_cc_totals = mysqli_query($connection,$query_cc_totals);
 		while ($row = mysqli_fetch_assoc($result_cc_totals)) {
 			// set_elementTypes($row); // row passed as a reference.

@@ -2,18 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=800">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<link rel="icon" href="./images/favicon16.png" type="image/png">
 	<link rel="apple-touch-icon" href="./images/iosicon120.png" type="image/png">
 	<link rel="mask-icon" href="./images/mask-icon.svg" color='#ff9c1a'>
 	<link rel="stylesheet" href="monitormate.css" type="text/css">
-<link rel="stylesheet" href="monitormate-modern.css?v=202512280328" type="text/css">
 	<link rel="stylesheet" href="monitormate-modern.css?v=202512280328" type="text/css">
-	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="http://code.highcharts.com/5.0.14/highcharts.js"></script>
-	<script src="http://code.highcharts.com/5.0.14/highcharts-more.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.highcharts.com/5.0.14/highcharts.js"></script>
+	<script src="https://code.highcharts.com/5.0.14/highcharts-more.js"></script>
 	<script src="./config/config.php"></script>
 	<script src="./js/monitormate.js"></script>
 	<script src="./js/charts.js"></script>
@@ -34,16 +33,16 @@ if (defined('DEBUG') && DEBUG) {
 print("<li><a href='debug.html'>DEBUG</a></li>");
 }
 ?>
-			?>
 		</ol>
 		<h1 id="navtitle"></h1>
 		<div id="button-cluster">
 			Updated: <span id="update_time">?</span>
+			<button id="theme-toggle">🌙 Dark</button>
 		</div>
 	</div>
 <?php
 	include_once('fix_mysql.inc.php');
-	ob_start(); //Redirect output to internal buffer			
+	ob_start();
 	require_once './database.php';
 	ob_end_clean();
 	
@@ -61,10 +60,24 @@ print("<li><a href='debug.html'>DEBUG</a></li>");
 		");
 	}
 	print("</table>");
-
 ?>
 
 	<script>
+		// Dark mode Highcharts theme
+		var darkChartTheme = {
+			chart: { backgroundColor: '#252540' },
+			title: { style: { color: '#eaeaea' } },
+			legend: { itemStyle: { color: '#ccc' } },
+			xAxis: { 
+				labels: { style: { color: '#aaa' } },
+				lineColor: '#444',
+				tickColor: '#444'
+			},
+			yAxis: { 
+				labels: { style: { color: '#aaa' } },
+				gridLineColor: '#333'
+			}
+		};
 
 		$(document).ready(function() {
 			get_dataStream(false, 4);
@@ -87,21 +100,81 @@ print("<li><a href='debug.html'>DEBUG</a></li>");
 				refresh_data(false);
 				setInterval("refresh_data()", 2*1000);
 			} else {
-				// must not be anything in full_day_data
 				$("#navbar").after("<p>No data exists for this day.</p>");
 				$("#update_time").text('N/A');
 			}
 
 			finalize_CSS();
 			
+			// Theme toggle
+			if (localStorage.getItem('theme') === 'dark') {
+				enableDarkMode();
+			}
+			
+			$('#theme-toggle').on('click', function() {
+				if ($('body').hasClass('dark-mode')) {
+					disableDarkMode();
+				} else {
+					enableDarkMode();
+				}
+			});
 		});
 
+		function enableDarkMode() {
+			$('body').addClass('dark-mode');
+			$('#theme-toggle').text('☀️ Light');
+			localStorage.setItem('theme', 'dark');
+			
+			// Update existing charts
+			Highcharts.charts.forEach(function(chart) {
+				if (chart) {
+					chart.update({
+						chart: { backgroundColor: '#252540' },
+						title: { style: { color: '#eaeaea' } },
+						legend: { itemStyle: { color: '#ccc' } },
+						xAxis: { 
+							labels: { style: { color: '#aaa' } },
+							lineColor: '#444',
+							tickColor: '#444'
+						},
+						yAxis: { 
+							labels: { style: { color: '#aaa' } },
+							gridLineColor: '#333'
+						}
+					});
+				}
+			});
+		}
+
+		function disableDarkMode() {
+			$('body').removeClass('dark-mode');
+			$('#theme-toggle').text('🌙 Dark');
+			localStorage.setItem('theme', 'light');
+			
+			// Reset charts to light theme
+			Highcharts.charts.forEach(function(chart) {
+				if (chart) {
+					chart.update({
+						chart: { backgroundColor: '#ffffff' },
+						title: { style: { color: '#333' } },
+						legend: { itemStyle: { color: '#333' } },
+						xAxis: { 
+							labels: { style: { color: '#666' } },
+							lineColor: '#ccd6eb',
+							tickColor: '#ccd6eb'
+						},
+						yAxis: { 
+							labels: { style: { color: '#666' } },
+							gridLineColor: '#e6e6e6'
+						}
+					});
+				}
+			});
+		}
+
 		function refresh_data(update) {
-
 			var update = (update != false)? true : false;
-
 			get_current_status();
-
 			draw_chart("fndc_soc_gauge", update);
 			draw_chart("batt_volts_gauge", update);
 			draw_chart("cc_output_gauge", update);
@@ -111,8 +184,6 @@ print("<li><a href='debug.html'>DEBUG</a></li>");
 			draw_chart("fndc_shuntC_gauge", update);
 			draw_chart("fndc_shuntNet_gauge", update);
 		}
-
 	</script>
-	
 </body>
 </html>

@@ -802,24 +802,24 @@ function get_fndc_soc() {
     	yAxis: {
     		tickInterval: 10, // I feel confident that we'd like to just see 10% intervals on the SOC chart
     		max: 100,
-    		min: 50, // I go back and forth on if the bottom yAxis should be dynamic or not.
+    		min: 0, // I go back and forth on if the bottom yAxis should be dynamic or not.
 		    labels: {
 		        format: '{value}%'
 		    },
 		    plotBands: [{
-		    	// red from 0 to 59
+		    	// red from 0 to 19
                 color: '#ffedee',
                 from: 0,
-                to: 59.9
+                to: 19.9
             } , {
-            	// yellow from 60 to 79
+            	// yellow from 20 to 49
 				color: '#ffffe1',
-				from: 60,
-				to: 79.9
+				from: 20,
+				to: 49.9
             } , {
-				// green from 80 to 100
+				// green from 50 to 100
 				color: '#dfffe0',
-				from: 80,
+				from: 50,
 				to: 100
             }]
 		},

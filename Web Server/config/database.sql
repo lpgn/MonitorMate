@@ -9,7 +9,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `monitormate_fndc` (
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `address` int(11) NOT NULL DEFAULT '0',
   `device_id` int(11) DEFAULT NULL,
   `shunt_a_current` float DEFAULT NULL,
@@ -152,4 +152,5 @@ CREATE TABLE IF NOT EXISTS `monitormate_prefs` (
   `setting` text NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

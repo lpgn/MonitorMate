@@ -170,24 +170,24 @@ function get_fndc_soc_gauge(chart) {
 				}
 			},
 			yAxis: {
-				min: 50,
+				min: 0,
 				max: 100,
 	
 				tickInterval: 5,			
 				minorTickInterval: 1,
 				
 				plotBands: [{
-					from: 50,
-					to: 60,
+					from: 0,
+					to: 19.9,
 					thickness: 40,
 					color: '#e52e31' // red
 				}, {
-					from: 60,
-					to: 80,
+					from: 20,
+					to: 49.9,
 					thickness: 40,
 					color: '#fadd00' // yellow
 				}, {
-					from: 80,
+					from: 50,
 					to: 100,
 					thickness: 40,
 					color: '#39c21d' // green

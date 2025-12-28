@@ -29,6 +29,7 @@
 		<h1 id="navtitle"></h1>
 	</div>
 <?php
+	//include_once('fix_mysql.inc.php');
 	ob_start(); //Redirect output to internal buffer
 	require_once './config/config.php';
 	require_once './database.php';
