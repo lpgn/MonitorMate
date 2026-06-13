@@ -11,13 +11,13 @@
 	<meta name="theme-color" content="#0a0b10">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="monitormate-modern.css?v=2" type="text/css">
+	<link rel="stylesheet" href="monitormate-modern.css?v=20260613b" type="text/css">
 
 	<!-- Scripts -->
-	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="./js/vendor/jquery-3.1.1.min.js?v=20260613b"></script>
 	<script src="./config/config.php"></script>
-	<script src="./js/monitormate.js"></script>
-	<script src="./js/monitormate-theme.js"></script>
+	<script src="./js/monitormate.js?v=20260613b"></script>
+	<script src="./js/monitormate-theme.js?v=20260613b"></script>
 
 	<title>MonitorMate // METRICS</title>
 </head>
@@ -25,18 +25,18 @@
 <body>
 	<div id="navbar">
 		<div style="display:flex; flex-direction:column;">
-			<h1>MonitorMate <span style="font-size:0.6em; color:var(--text-muted); vertical-align:middle;">// METRICS
-					<span style="font-size:0.5em; opacity: 0.7;">// DETAILED</span></span></h1>
+			<h1>MonitorMate <span class="version">Details
+					</span></h1>
 			<div id="button-cluster">
-				LAST UPDATE: <span id="update_time" style="font-family: var(--font-mono);">SYNCING...</span>
+				Last update: <span id="update_time" style="font-family: var(--font-mono);">SYNCING...</span>
 			</div>
 		</div>
 
 		<ol id="toc">
-			<li><a href="current.php">SYSTEM STATUS</a></li>
-			<li><a href="historical.html">LOGS</a></li>
-			<li class="current"><a href="details.html">METRICS</a></li>
-			<li><a href="debug.html">DEBUG</a></li>
+			<li><a href="current.php">Status</a></li>
+			<li><a href="historical.html">History</a></li>
+			<li class="current"><a href="details.html">Details</a></li>
+			<li><a href="debug.html">Debug</a></li>
 		</ol>
 	</div>
 	<main class="dashboard-grid" style="display:block;">
@@ -78,7 +78,7 @@
 						if ($('#inverters').text() == "None Found") {
 							$('#inverters').text('');
 						}
-						$('#inverters').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>Inverter Found.</div></div>&nbsp;");
+						$('#inverters').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>Inverter Found.</div></div>");
 						$('#device_' + i).data('devAddress', ID.fx + ':' + devices_array[i].address);
 						set_status('device_' + i, $('#device_' + i).data('devAddress'));
 						break;
@@ -87,7 +87,7 @@
 						if ($('#inverters').text() == "None Found") {
 							$('#inverters').text('');
 						}
-						$('#inverters').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>Inverter Found.</div></div>&nbsp;");
+						$('#inverters').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>Inverter Found.</div></div>");
 						$('#device_' + i).data('devAddress', ID.fxr + ':' + devices_array[i].address);
 						set_status('device_' + i, $('#device_' + i).data('devAddress'));
 						break;
@@ -96,7 +96,7 @@
 						if ($('#charge_controllers').text() == "None Found") {
 							$('#charge_controllers').text('');
 						}
-						$('#charge_controllers').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>Charge Controller Found.</div></div>&nbsp;");
+						$('#charge_controllers').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>Charge Controller Found.</div></div>");
 						$('#device_' + i).data('devAddress', ID.cc + ':' + devices_array[i].address);
 						set_status('device_' + i, $('#device_' + i).data('devAddress'));
 						break;
@@ -104,7 +104,7 @@
 						if ($('#fndc').text() == "None Found") {
 							$('#fndc').text('');
 						}
-						$('#fndc').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>FNDC Found.</div></div>&nbsp;");
+						$('#fndc').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>FNDC Found.</div></div>");
 						$('#device_' + i).data('devAddress', ID.fndc + ':' + devices_array[i].address);
 						set_status('device_' + i, $('#device_' + i).data('devAddress'));
 						break;
@@ -112,7 +112,7 @@
 						if ($('#inverters').text() == "None Found") {
 							$('#inverters').text('');
 						}
-						$('#inverters').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>Inverter Found.</div></div>&nbsp;");
+						$('#inverters').append("<div class='status' style='display: inline-block;'><div id='device_" + i + "' class='status_content'>Inverter Found.</div></div>");
 						$('#device_' + i).data('devAddress', ID.rad + ':' + devices_array[i].address);
 						set_status('device_' + i, $('#device_' + i).data('devAddress'));
 						break;

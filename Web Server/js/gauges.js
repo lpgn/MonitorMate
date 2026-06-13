@@ -180,17 +180,17 @@ function get_fndc_soc_gauge(chart) {
 					from: 0,
 					to: 19.9,
 					thickness: 40,
-					color: '#e52e31' // red
+					color: '#dc3d43' // red
 				}, {
 					from: 20,
 					to: 49.9,
 					thickness: 40,
-					color: '#fadd00' // yellow
+					color: '#eab308' // yellow
 				}, {
 					from: 50,
 					to: 100,
 					thickness: 40,
-					color: '#39c21d' // green
+					color: '#22b061' // green
 				}]
 			},
 	
@@ -251,32 +251,32 @@ function get_batt_volts_gauge(chart) {
 					from: chartMin,
 					to: CONFIG.sysVoltage - (CONFIG.sysVoltage/24),
 					thickness: 40,
-					color: '#e52e31' // red
+					color: '#dc3d43' // red
 				}, {
 					from: CONFIG.sysVoltage - (CONFIG.sysVoltage/24),
 					to: CONFIG.sysVoltage,
 					thickness: 40,
-					color: '#fadd00' // yellow
+					color: '#eab308' // yellow
 				}, {
 					from: CONFIG.sysVoltage,
 					to: CONFIG.sysAbsorbVoltage * 0.97,
 					thickness: 40,
-					color: 'rgba(57,194,29,0.50)' // green
+					color: 'rgba(34,176,97,0.50)' // green
 				}, {
 					from: CONFIG.sysAbsorbVoltage * 0.97,
 					to: CONFIG.sysAbsorbVoltage * 1.03,
 					thickness: 40,
-					color: '#39c21d' // green
+					color: '#22b061' // green
 				}, {
 					from: CONFIG.sysAbsorbVoltage * 1.03,
 					to: chartMax - (CONFIG.sysVoltage/24),
 					thickness: 40,
-					color: '#fadd00' // yellow
+					color: '#eab308' // yellow
 				}, {
 					from: chartMax - (CONFIG.sysVoltage/24),
 					to: chartMax,
 					thickness: 40,
-					color: '#e52e31' // red
+					color: '#dc3d43' // red
 				}]
 			},
 	
@@ -335,17 +335,17 @@ function get_cc_output_gauge(chart) {
 					from: 0,
 					to: (CONFIG.pvWattage*0.20),
 					thickness: 40,
-					color: 'rgba(57,194,29,0.25)' // green
+					color: 'rgba(34,176,97,0.25)' // green
 				}, {
 					from: (CONFIG.pvWattage*0.20),
 					to: (CONFIG.pvWattage*0.80),
 					thickness: 40,
-					color: 'rgba(57,194,29,0.50)' // green
+					color: 'rgba(34,176,97,0.50)' // green
 				}, {
 					from: (CONFIG.pvWattage*0.80),
 					to: CONFIG.pvWattage,
 					thickness: 40,
-					color: 'rgba(57,194,29,1.0)' // green
+					color: 'rgba(34,176,97,1.0)' // green
 				}]
 			},
 	
@@ -438,17 +438,17 @@ function get_inverter_power_gauge(chart) {
 					from: 0,
 					to: (chart_max*0.8),
 					thickness: 40,
-					color: '#39c21d' // green
+					color: '#22b061' // green
 				}, {
 					from: (chart_max*0.8),
 					to: (chart_max*0.90),
 					thickness: 40,
-					color: '#fadd00' // yellow
+					color: '#eab308' // yellow
 				}, {
 					from: (chart_max*0.90),
 					to: chart_max,
 					thickness: 40,
-					color: '#e52e31' // red
+					color: '#dc3d43' // red
 				}]
 			},
 	
@@ -475,9 +475,9 @@ function get_fndc_shunt_gauge(shunt, chart) {
 	var chart_max = null;
 	var chart_mode = null;
 	
-	chart_chgColor[0] = "rgba(57,194,29,0.25)"; // green
-	chart_chgColor[1] = "rgba(57,194,29,0.50)"; // green
-	chart_chgColor[2] = "rgba(57,194,29,1.00)"; // green
+	chart_chgColor[0] = "rgba(34,176,97,0.25)"; // green
+	chart_chgColor[1] = "rgba(34,176,97,0.50)"; // green
+	chart_chgColor[2] = "rgba(34,176,97,1.00)"; // green
 
 	chart_disColor[0] = "rgba(250,221,0,0.25)"; // yellow
 	chart_disColor[1] = "rgba(250,221,0,0.50)"; // yellow
@@ -648,9 +648,9 @@ function get_fndc_shuntNet_gauge(chart) {
 	var chart_chgColor = [];
 	var chart_disColor = [];
 	
-	chart_chgColor[0] = "rgba(57,194,29,0.25)"; // green
-	chart_chgColor[1] = "rgba(57,194,29,0.50)"; // green
-	chart_chgColor[2] = "rgba(57,194,29,1.00)"; // green
+	chart_chgColor[0] = "rgba(34,176,97,0.25)"; // green
+	chart_chgColor[1] = "rgba(34,176,97,0.50)"; // green
+	chart_chgColor[2] = "rgba(34,176,97,1.00)"; // green
 
 	chart_disColor[0] = "rgba(250,221,0,0.25)"; // yellow
 	chart_disColor[1] = "rgba(250,221,0,0.50)"; // yellow

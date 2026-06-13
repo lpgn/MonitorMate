@@ -8,10 +8,10 @@
 	<link rel="icon" href="./images/favicon16.png" type="image/png">
 	<link rel="apple-touch-icon" href="./images/iosicon120.png" type="image/png">
 	<link rel="mask-icon" href="./images/mask-icon.svg" color='#ff9c1a'>
-	<link rel="stylesheet" href="monitormate.css" type="text/css">
-	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="monitormate.css?v=20260613b" type="text/css">
+	<script src="./js/vendor/jquery-3.1.1.min.js?v=20260613b"></script>
 	<script src="./config/config.php"></script>
-	<script src="./js/monitormate.js"></script>
+	<script src="./js/monitormate.js?v=20260613b"></script>
 	<title>MonitorMate: Preferences</title>
 </head>
 <body>

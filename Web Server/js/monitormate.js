@@ -355,6 +355,19 @@ function get_current_status() {
 }
 
 
+
+// Display formatting: trims floating-point noise (26.200000000000003 -> 26.2)
+function fmt(value, decimals) {
+	var n = parseFloat(value);
+	if (isNaN(n)) {
+		return value;
+	}
+	if (decimals === undefined) {
+		decimals = 1;
+	}
+	return String(parseFloat(n.toFixed(decimals)));
+}
+
 function set_status(HTML_id, value) {
 
 	/*global deviceLabels, full_day_data, json_status, shuntLabels, status_content */
@@ -392,13 +405,13 @@ function set_status(HTML_id, value) {
 
 		case "summary":
 			content = '<table><caption>Summary<div>' + device.date + '</div></caption>\
-						<tr><td class="label">Production:</td><td>' + device.ah_in + ' Ah, ' + device.kwh_in + ' kWh</td></tr>\
-						<tr><td class="label">Usage:</td><td>' + device.ah_out + ' Ah, ' + device.kwh_out + ' kWh</td></tr>\
-						<tr><td class="label">Net:</td><td>' + device.ah_net + ' Ah, ' + device.kwh_net + ' kWh</td></tr>\
+						<tr><td class="label">Production:</td><td>' + fmt(device.ah_in, 0) + ' Ah, ' + fmt(device.kwh_in, 2) + ' kWh</td></tr>\
+						<tr><td class="label">Usage:</td><td>' + fmt(device.ah_out, 0) + ' Ah, ' + fmt(device.kwh_out, 2) + ' kWh</td></tr>\
+						<tr><td class="label">Net:</td><td>' + fmt(device.ah_net, 0) + ' Ah, ' + fmt(device.kwh_net, 2) + ' kWh</td></tr>\
 						<tr><td class="label">Max SOC:</td><td>' + device.max_soc + '%</td></tr>\
 						<tr><td class="label">Min SOC:</td><td>' + device.min_soc + '%</td></tr>\
-						<tr><td class="label">Max Temp:</td><td>' + device.max_temp + ' &deg;C (' + ((device.max_temp * 1.8) + 32).toFixed(1) + ' &deg;F)</td></tr>\
-						<tr><td class="label">Min Temp:</td><td>' + device.min_temp + ' &deg;C (' + ((device.min_temp * 1.8) + 32).toFixed(1) + ' &deg;F)</td></tr>\
+						<tr><td class="label">Max Temp:</td><td>' + fmt(device.max_temp, 1) + ' &deg;C (' + ((device.max_temp * 1.8) + 32).toFixed(1) + ' &deg;F)</td></tr>\
+						<tr><td class="label">Min Temp:</td><td>' + fmt(device.min_temp, 1) + ' &deg;C (' + ((device.min_temp * 1.8) + 32).toFixed(1) + ' &deg;F)</td></tr>\
 						</table>';
 			break;
 
@@ -406,14 +419,14 @@ function set_status(HTML_id, value) {
 		case ID.fxr:
 			content = '<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
 						<tr><td class="label">Operational Mode:</td><td>' + device.operational_mode + '</td></tr>\
-						<tr><td class="label">Battery Voltage:</td><td>' + device.battery_voltage + ' V</td></tr>\
-						<tr><td class="label">AC Output Voltage:</td><td>' + device.ac_output_voltage + ' V</td></tr>\
-						<tr><td class="label">Inverter Current:</td><td>' + device.inverter_current + ' A</td></tr>\
+						<tr><td class="label">Battery Voltage:</td><td>' + fmt(device.battery_voltage, 1) + ' V</td></tr>\
+						<tr><td class="label">AC Output Voltage:</td><td>' + fmt(device.ac_output_voltage, 0) + ' V</td></tr>\
+						<tr><td class="label">Inverter Current:</td><td>' + fmt(device.inverter_current, 1) + ' A</td></tr>\
 						<tr><td class="label">AC Input Mode:</td><td>' + device.ac_mode + '</td></tr>\
-						<tr><td class="label">AC Input Voltage:</td><td>' + device.ac_input_voltage + ' V</td></tr>\
-						<tr><td class="label">Charge Current:</td><td>' + device.charge_current + ' A</td></tr>\
-						<tr><td class="label">Buy Current:</td><td>' + device.buy_current + ' A</td></tr>\
-						<tr><td class="label">Sell Current:</td><td>' + device.sell_current + ' A</td></tr>\
+						<tr><td class="label">AC Input Voltage:</td><td>' + fmt(device.ac_input_voltage, 0) + ' V</td></tr>\
+						<tr><td class="label">Charge Current:</td><td>' + fmt(device.charge_current, 1) + ' A</td></tr>\
+						<tr><td class="label">Buy Current:</td><td>' + fmt(device.buy_current, 1) + ' A</td></tr>\
+						<tr><td class="label">Sell Current:</td><td>' + fmt(device.sell_current, 1) + ' A</td></tr>\
 						<tr><td class="label">Misc:</td><td>' + device.misc + '</td></tr>\
 						<tr><td class="label">Warnings:</td><td>' + device.warning_modes + '</td></tr>\
 						<tr><td class="label">Errors:</td><td>' + device.error_modes + '</td></tr>\
@@ -448,13 +461,13 @@ function set_status(HTML_id, value) {
 			var charge_watts = parseFloat(device.battery_voltage) * parseFloat(device.charge_current);
 			content = '<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
 						<tr><td class="label">Charge Mode:</td><td>' + device.charge_mode + '</td></tr>\
-						<tr><td class="label">Battery Voltage:</td><td>' + device.battery_voltage + ' V</td></tr>\
-						<tr><td class="label">Charge Current:</td><td>' + device.charge_current + ' A</td></tr>\
+						<tr><td class="label">Battery Voltage:</td><td>' + fmt(device.battery_voltage, 1) + ' V</td></tr>\
+						<tr><td class="label">Charge Current:</td><td>' + fmt(device.charge_current, 1) + ' A</td></tr>\
 						<tr><td class="label">Charge Power:</td><td>' + charge_watts.toFixed(0) + ' W</td></tr>\
-						<tr><td class="label">PV Voltage:</td><td>' + device.pv_voltage + ' V</td></tr>\
-						<tr><td class="label">PV Current:</td><td>' + device.pv_current + ' A</td></tr>\
-						<tr><td class="label">Daily Ah:</td><td>' + device.daily_ah + ' Ah</td></tr>\
-						<tr><td class="label">Daily kWh:</td><td>' + device.daily_kwh + ' kWh</td></tr>\
+						<tr><td class="label">PV Voltage:</td><td>' + fmt(device.pv_voltage, 0) + ' V</td></tr>\
+						<tr><td class="label">PV Current:</td><td>' + fmt(device.pv_current, 1) + ' A</td></tr>\
+						<tr><td class="label">Daily Ah:</td><td>' + fmt(device.daily_ah, 0) + ' Ah</td></tr>\
+						<tr><td class="label">Daily kWh:</td><td>' + fmt(device.daily_kwh, 2) + ' kWh</td></tr>\
 						<tr><td class="label">Aux Mode:</td><td>' + device.aux_mode + '</td></tr>\
 						<tr><td class="label">Errors:</td><td>' + device.error_modes + '</td></tr>\
 						</table>';
@@ -468,26 +481,26 @@ function set_status(HTML_id, value) {
 			var today_net_kwh = parseFloat(device.today_net_input_kwh) - parseFloat(device.today_net_output_kwh);
 			content = '<table><caption>' + device.label + '<div>Port ' + device.address + '</div></caption>\
 						<tr><td class="label">State of Charge:</td><td>' + device.soc + '%</td></tr>\
-						<tr><td class="label">Days Since Charged:</td><td>' + device.days_since_full + ' Days</td></tr>\
-						<tr><td class="label">Charge Required:</td><td>' + (device.charge_factor_corrected_net_batt_ah * -1) + ' Ah, ' + (device.charge_factor_corrected_net_batt_kwh * -1) + ' kWh</td></tr>\
+						<tr><td class="label">Days Since Charged:</td><td>' + fmt(device.days_since_full, 1) + ' Days</td></tr>\
+						<tr><td class="label">Charge Required:</td><td>' + fmt(device.charge_factor_corrected_net_batt_ah * -1, 0) + ' Ah, ' + fmt(device.charge_factor_corrected_net_batt_kwh * -1, 2) + ' kWh</td></tr>\
 						<tr><td class="label">Within Charge Params:</td><td>' + device.charge_params_met + '</td></tr>\
 						<th class="subhead">Battery</th>\
-						<tr><td class="label">Voltage:</td><td>' + device.battery_voltage + ' V</td></tr>\
-						<tr><td class="label">Temperature:</td><td>' + device.battery_temp + ' &deg;C (' + ((device.battery_temp * 1.8) + 32).toFixed(1) + ' &deg;F)</td></tr>\
+						<tr><td class="label">Voltage:</td><td>' + fmt(device.battery_voltage, 1) + ' V</td></tr>\
+						<tr><td class="label">Temperature:</td><td>' + fmt(device.battery_temp, 1) + ' &deg;C (' + ((device.battery_temp * 1.8) + 32).toFixed(1) + ' &deg;F)</td></tr>\
 						<th class="subhead">Shunts</th>\
-						<tr><td class="label">' + device.shunt_a_label + ':</td><td>' + device.shunt_a_current + ' A, ' + Math.round(device.shunt_a_current * device.battery_voltage) + ' W</td></tr>\
-						<tr><td class="label">' + device.shunt_b_label + ':</td><td>' + device.shunt_b_current + ' A, ' + Math.round(device.shunt_b_current * device.battery_voltage) + ' W</td></tr>\
-						<tr><td class="label">' + device.shunt_c_label + ':</td><td>' + device.shunt_c_current + ' A, ' + Math.round(device.shunt_c_current * device.battery_voltage) + ' W</td></tr>\
+						<tr><td class="label">' + device.shunt_a_label + ':</td><td>' + fmt(device.shunt_a_current, 1) + ' A, ' + Math.round(device.shunt_a_current * device.battery_voltage) + ' W</td></tr>\
+						<tr><td class="label">' + device.shunt_b_label + ':</td><td>' + fmt(device.shunt_b_current, 1) + ' A, ' + Math.round(device.shunt_b_current * device.battery_voltage) + ' W</td></tr>\
+						<tr><td class="label">' + device.shunt_c_label + ':</td><td>' + fmt(device.shunt_c_current, 1) + ' A, ' + Math.round(device.shunt_c_current * device.battery_voltage) + ' W</td></tr>\
 						<tr><td class="label">Battery (Net):</td><td>' + total_shunt_amps.toFixed(1) + ' A, ' + Math.round(total_shunt_amps * device.battery_voltage) + ' W</td></tr>\
 						<th class="subhead">Today\'s Totals</th>\
-						<tr><td class="label">Input:</td><td>' + device.today_net_input_ah + ' Ah, ' + device.today_net_input_kwh + ' kWh</td></tr>\
-						<tr><td class="label">Output:</td><td>' + device.today_net_output_ah + ' Ah, ' + device.today_net_output_kwh + ' kWh</td></tr>\
+						<tr><td class="label">Input:</td><td>' + fmt(device.today_net_input_ah, 0) + ' Ah, ' + fmt(device.today_net_input_kwh, 2) + ' kWh</td></tr>\
+						<tr><td class="label">Output:</td><td>' + fmt(device.today_net_output_ah, 0) + ' Ah, ' + fmt(device.today_net_output_kwh, 2) + ' kWh</td></tr>\
 						<tr><td class="label">Battery (Net):</td><td>' + today_net_ah + ' Ah, ' + today_net_kwh.toFixed(2) + ' kWh</td></tr>\
 						<th class="subhead">Since Charged</th>\
-						<tr><td class="label">' + device.shunt_a_label + ':</td><td>' + device.accumulated_ah_shunt_a + ' Ah, ' + device.accumulated_kwh_shunt_a + ' kWh</td></tr>\
-						<tr><td class="label">' + device.shunt_b_label + ':</td><td>' + device.accumulated_ah_shunt_b + ' Ah, ' + device.accumulated_kwh_shunt_b + ' kWh</td></tr>\
-						<tr><td class="label">' + device.shunt_c_label + ':</td><td>' + device.accumulated_ah_shunt_c + ' Ah, ' + device.accumulated_kwh_shunt_c + ' kWh</td></tr>\
-						<tr><td class="label">Battery (Net):</td><td>' + net_accumulated_ah + ' Ah, ' + net_accumulated_kwh.toFixed(2) + ' kWh</td></tr>\
+						<tr><td class="label">' + device.shunt_a_label + ':</td><td>' + fmt(device.accumulated_ah_shunt_a, 0) + ' Ah, ' + fmt(device.accumulated_kwh_shunt_a, 2) + ' kWh</td></tr>\
+						<tr><td class="label">' + device.shunt_b_label + ':</td><td>' + fmt(device.accumulated_ah_shunt_b, 0) + ' Ah, ' + fmt(device.accumulated_kwh_shunt_b, 2) + ' kWh</td></tr>\
+						<tr><td class="label">' + device.shunt_c_label + ':</td><td>' + fmt(device.accumulated_ah_shunt_c, 0) + ' Ah, ' + fmt(device.accumulated_kwh_shunt_c, 2) + ' kWh</td></tr>\
+						<tr><td class="label">Battery (Net):</td><td>' + fmt(net_accumulated_ah, 0) + ' Ah, ' + net_accumulated_kwh.toFixed(2) + ' kWh</td></tr>\
 						<th class="subhead">Auxiliary Relay</th>\
 						<tr><td class="label">Mode:</td><td>' + device.relay_mode + '</td></tr>\
 						<tr><td class="label">Status:</td><td>' + device.relay_status + '</td></tr>\
@@ -519,11 +532,16 @@ function draw_chart(chart_id, update, content) {
 		content = chart_id;
 	}
 
+	// not every chart/gauge is on every page; skip the ones that aren't here
+	if ($('#' + chart_id).length === 0) {
+		return;
+	}
+
 	chart = $('#' + chart_id).highcharts();
 	func_call = "get_" + content + "(chart)";
 	chart_data = eval(func_call);
 
-	if (update) {
+	if (update && chart) {
 		chart.series[0].setData(chart_data); // update the data
 	} else {
 		$('#' + chart_id).highcharts(chart_data); // chart the data!

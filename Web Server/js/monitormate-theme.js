@@ -1,7 +1,7 @@
 /*
     MonitorMate Modern Theme & Visual Overrides
-    "Refined Industrial" Aesthetic
-    Auto-applied to all pages
+    Dark dashboard theme, tuned for readability.
+    Auto-applied to all pages.
 */
 
 $(function () {
@@ -40,39 +40,64 @@ $(function () {
         var baseColors = ['#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
         var gradientColors = baseColors.map(getGradient);
 
+        // Dock the tooltip in a fixed corner of the plot area, on the
+        // opposite side from the cursor, so it never covers the data
+        // you are pointing at.
+        function dockedTooltipPositioner(labelWidth, labelHeight, point) {
+            var chart = this.chart;
+            var x;
+            if (point.plotX < chart.plotWidth / 2) {
+                x = chart.plotLeft + chart.plotWidth - labelWidth - 6; // cursor left, dock right
+            } else {
+                x = chart.plotLeft + 6; // cursor right, dock left
+            }
+            if (x < 0) { x = 0; }
+            return { x: x, y: chart.plotTop + 6 };
+        }
+
         var modernStyle = {
             chart: {
                 backgroundColor: 'transparent',
                 style: {
-                    fontFamily: '"Space Mono", monospace'
+                    fontFamily: 'Inter, "Helvetica Neue", Arial, sans-serif'
                 },
                 width: null,
                 height: null
             },
             colors: gradientColors,
             title: {
-                style: { color: '#e0e6ed', textTransform: 'uppercase', fontSize: '14px' }
+                style: {
+                    color: '#e6edf3',
+                    fontSize: '14px',
+                    fontWeight: '600'
+                }
             },
             xAxis: {
-                gridLineColor: '#2d3748',
-                labels: { style: { color: '#94a3b8' } },
-                lineColor: '#2d3748',
-                tickColor: '#2d3748'
+                gridLineColor: '#283142',
+                labels: { style: { color: '#aab8c8', fontSize: '11px' } },
+                lineColor: '#36415a',
+                tickColor: '#36415a'
             },
             yAxis: {
-                gridLineColor: '#2d3748',
-                labels: { style: { color: '#94a3b8' } },
-                title: { style: { color: '#94a3b8' } }
+                gridLineColor: '#283142',
+                labels: { style: { color: '#aab8c8', fontSize: '11px' } },
+                title: { style: { color: '#aab8c8' } }
             },
             tooltip: {
-                backgroundColor: 'rgba(20, 22, 31, 0.95)',
-                borderColor: '#2d3748',
-                style: { color: '#e0e6ed' }
+                positioner: dockedTooltipPositioner,
+                followPointer: false,
+                shadow: false,
+                borderRadius: 6,
+                borderColor: '#3b4759',
+                backgroundColor: 'rgba(13, 17, 23, 0.95)',
+                style: { color: '#e6edf3', fontSize: '12px' }
             },
             legend: {
-                itemStyle: { color: '#e0e6ed' },
-                itemHoverStyle: { color: '#fff' },
-                itemHiddenStyle: { color: '#606063' }
+                backgroundColor: 'transparent',
+                borderWidth: 0,
+                itemStyle: { color: '#cbd5e1', fontSize: '11px', fontWeight: 'normal' },
+                itemHoverStyle: { color: '#ffffff' },
+                itemHiddenStyle: { color: '#5b6878' }
             },
             credits: { enabled: false }
         };
@@ -109,18 +134,44 @@ $(function () {
                     backgroundColor: 'transparent',
                     width: null,
                     height: null,
-                    style: { fontFamily: '"Space Mono", monospace' }
+                    style: { fontFamily: 'Inter, "Helvetica Neue", Arial, sans-serif' }
                 },
                 title: modernStyle.title,
-                colors: modernStyle.colors
+                colors: modernStyle.colors,
+                yAxis: {
+                    tickColor: 'rgba(230, 237, 243, 0.6)',
+                    minorTickColor: 'rgba(230, 237, 243, 0.3)',
+                    lineColor: 'rgba(230, 237, 243, 0.4)',
+                    labels: {
+                        style: { color: '#aab8c8', fontSize: '10px' }
+                    }
+                }
             });
 
             if (Highcharts.gaugeTheme.plotOptions && Highcharts.gaugeTheme.plotOptions.gauge) {
                 Highcharts.gaugeTheme.plotOptions.gauge.dial = Highcharts.gaugeTheme.plotOptions.gauge.dial || {};
                 Highcharts.gaugeTheme.plotOptions.gauge.dial.backgroundColor = '#f59e0b';
+                Highcharts.gaugeTheme.plotOptions.gauge.dial.borderWidth = 0;
 
                 Highcharts.gaugeTheme.plotOptions.gauge.pivot = Highcharts.gaugeTheme.plotOptions.gauge.pivot || {};
                 Highcharts.gaugeTheme.plotOptions.gauge.pivot.backgroundColor = '#e0e6ed';
+                Highcharts.gaugeTheme.plotOptions.gauge.pivot.borderWidth = 0;
+
+                // Big readable value under the needle
+                Highcharts.gaugeTheme.plotOptions.gauge.dataLabels = $.extend(
+                    true,
+                    Highcharts.gaugeTheme.plotOptions.gauge.dataLabels || {},
+                    {
+                        borderWidth: 0,
+                        backgroundColor: 'transparent',
+                        style: {
+                            color: '#e6edf3',
+                            fontSize: '15px',
+                            fontWeight: '600',
+                            textOutline: 'none'
+                        }
+                    }
+                );
             }
             Highcharts.gaugeTheme.pane = Highcharts.gaugeTheme.pane || {};
             Highcharts.gaugeTheme.pane.background = null;

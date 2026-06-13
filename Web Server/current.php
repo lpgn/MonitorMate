@@ -10,40 +10,40 @@
     <meta name="theme-color" content="#0a0b10">
 	
     <!-- CSS -->
-    <link rel="stylesheet" href="monitormate-modern.css?v=<?php echo time(); ?>" type="text/css">
+    <link rel="stylesheet" href="monitormate-modern.css?v=20260613b" type="text/css">
 	
     <!-- Scripts -->
-	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="http://code.highcharts.com/5.0.14/highcharts.js"></script>
-	<script src="http://code.highcharts.com/5.0.14/highcharts-more.js"></script>
+	<script src="./js/vendor/jquery-3.1.1.min.js?v=20260613b"></script>
+	<script src="./js/vendor/highcharts.js?v=20260613b"></script>
+	<script src="./js/vendor/highcharts-more.js?v=20260613b"></script>
 	<script src="./config/config.php"></script>
-	<script src="./js/monitormate.js"></script>
-	<script src="./js/charts.js"></script>
-	<script src="./js/gauges.js"></script>
-    <script src="./js/monitormate-theme.js?v=<?php echo time(); ?>"></script>
+	<script src="./js/monitormate.js?v=20260613b"></script>
+	<script src="./js/charts.js?v=20260613b"></script>
+	<script src="./js/gauges.js?v=20260613b"></script>
+    <script src="./js/monitormate-theme.js?v=20260613b"></script>
     
-	<title>MonitorMate // SYSTEM STATUS</title>
+	<title>MonitorMate — System Status</title>
 </head>
 <body>
 
 	<div id="navbar">
         <div style="display:flex; flex-direction:column;">
-    		<h1>MonitorMate <span style="font-size:0.6em; color:var(--text-muted); vertical-align:middle;">// v2.0</span></h1>
+    		<h1>MonitorMate <span class="version">v2.0</span></h1>
             <div id="button-cluster">
-    			LAST UPDATE: <span id="update_time" style="font-family: var(--font-mono);">SYNCING...</span>
+    			Last update: <span id="update_time">syncing&hellip;</span>
     		</div>
         </div>
         
 		<ol id="toc">
-			<li class="current"><a href="current.php">SYSTEM STATUS</a></li>
-			<li><a href="historical.html">LOGS</a></li>
-			<li><a href="details.html">METRICS</a></li>
+			<li class="current"><a href="current.php">Status</a></li>
+			<li><a href="historical.html">History</a></li>
+			<li><a href="details.html">Details</a></li>
             <?php
             ob_start();
             require_once './config/config.php';
             ob_end_clean();
             if (defined('DEBUG') && DEBUG) {
-                print("<li><a href='debug.html'>DEBUG</a></li>");
+                print("<li><a href='debug.html'>Debug</a></li>");
             }
             ?>
 		</ol>
